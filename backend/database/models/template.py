@@ -17,7 +17,6 @@
 #     : Mapped[] = relationship("", back_populates="")
 
 
-
 #     def get_schema(self) -> :
 #         return (
 #             id=self.id,

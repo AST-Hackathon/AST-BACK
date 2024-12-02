@@ -4,7 +4,6 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from sqlalchemy import pool
 from alembic import context
-import alembic_postgresql_enum
 
 from database.db_metadata import Base
 from config.db import db_settings

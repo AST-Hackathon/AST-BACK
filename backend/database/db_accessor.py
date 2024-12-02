@@ -74,7 +74,9 @@ class DatabaseAccessor:
         )
 
     def get_async_session_maker(self) -> sessionmaker:
-        return sessionmaker(bind=self.engine, expire_on_commit=False, class_=AsyncSession)
+        return sessionmaker(
+            bind=self.engine, expire_on_commit=False, class_=AsyncSession
+        )
 
     @asynccontextmanager
     async def get_session(self) -> AsyncGenerator[AsyncSession, None]:
@@ -125,7 +127,9 @@ class DatabaseAccessor:
     async def check_alembic_version(self) -> None:
         try:
             async with self.get_session() as session:
-                result = await session.execute(text("SELECT version_num FROM alembic_version;"))
+                result = await session.execute(
+                    text("SELECT version_num FROM alembic_version;")
+                )
                 version = result.scalar()
                 if version:
                     pass

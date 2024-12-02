@@ -1,8 +1,8 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter
 
 router = APIRouter(prefix="/example", tags=["Example"])
 
 
 # @router.post("", status_code=status.HTTP_201_CREATED)
-# async def create(model: example):  
+# async def create(model: example):
 #     return await example.create(model)

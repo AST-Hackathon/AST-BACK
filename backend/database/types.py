@@ -21,8 +21,12 @@ str_64 = Annotated[
     Field(max_length=64),
     mapped_column(String(64), default=str, nullable=True),
 ]
-str_256 = Annotated[str, Field(max_length=256), mapped_column(String(256), nullable=False)]
-str_1024 = Annotated[str, Field(max_length=1024), mapped_column(String(1024), nullable=False)]
+str_256 = Annotated[
+    str, Field(max_length=256), mapped_column(String(256), nullable=False)
+]
+str_1024 = Annotated[
+    str, Field(max_length=1024), mapped_column(String(1024), nullable=False)
+]
 
 UUID_PK = Annotated[
     UUID,

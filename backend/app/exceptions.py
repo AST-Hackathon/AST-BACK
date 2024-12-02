@@ -2,9 +2,6 @@ from typing import Any
 from fastapi import HTTPException, status
 
 
-from typing import Any, Dict
-from typing_extensions import Annotated, Doc
-from fastapi import HTTPException, status
 
 
 class DataBase404Exception(HTTPException):
@@ -30,9 +27,13 @@ class UnavailableLoginException(HTTPException):
             detail="Login is not available",
         )
 
+
 class InvalidTokenException(HTTPException):
     def __init__(self):
-        super().__init__(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+        super().__init__(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        )
+
 
 class TokenExpiredException(HTTPException):
     def __init__(self):
@@ -40,6 +41,7 @@ class TokenExpiredException(HTTPException):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token has expired",
         )
+
 
 class InvalidCredentialsException(HTTPException):
     def __init__(self):
@@ -51,7 +53,9 @@ class InvalidCredentialsException(HTTPException):
 
 class UserNotActiveException(HTTPException):
     def __init__(self):
-        super().__init__(status_code=status.HTTP_403_FORBIDDEN, detail="User is not active")
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN, detail="User is not active"
+        )
 
 
 class UserNotFoundException(HTTPException):
@@ -67,11 +71,17 @@ class UserNotAuthorizedException(HTTPException):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+
 class UserPrivilegesException(HTTPException):
     def __init__(self):
-        super().__init__(status_code=status.HTTP_403_FORBIDDEN, detail="Недостаточно прав")
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Недостаточно прав"
+        )
+
 
 class EnumExistenceException(HTTPException):
     def __init__(self, invalid_enum: str, enum_schema_name: str):
         detail = f"Enum {invalid_enum} doesn`t exist in {enum_schema_name}"
-        super().__init__(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=detail)
+        super().__init__(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=detail
+        )
