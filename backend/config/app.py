@@ -20,7 +20,7 @@ class AppSettings(BaseSettings):
     METHODS: List[str]
     HEADERS: List[str]
     origins: List[str] = ["*"]
-    REDIS_ENDPOINT: str
+    REDIS_ENDPOINT: str = "localhost"
 
     @property
     def app_settings(self):
