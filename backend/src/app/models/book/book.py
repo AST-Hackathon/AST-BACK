@@ -1,7 +1,7 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
-from src.app.schemas.book import BookFull, FotoBookFull, AutorBookFull, FeedbackFull
+from src.app.schemas.book import BookFull, FotoBookFull, AuthorBookFull, FeedbackFull
 from src.database.database_metadata import Base
 
 from src.app.models.mixin import IsActiveMixin, CreationDateMixin, UpdateDateMixin
@@ -14,11 +14,19 @@ class BookORM(Base, CreationDateMixin, UpdateDateMixin):
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
     avatar: Mapped[str] = mapped_column(String, nullable=False)
-    foto: Mapped[list["FotoBookORM"]] = relationship(
-        "FotoBookORM", back_populates="foto", cascade="all, delete-orphan"
+    # foto: Mapped[list["FotoBookORM"]] = relationship(
+    #     "FotoBookORM", back_populates="books", cascade="all, delete-orphan"
+    # )
+    # autor: Mapped[list["AuthorBookORM"]] = relationship(
+    #     "AuthorBookORM", back_populates="books", cascade="all, delete-orphan"
+    # )
+
+    fotos: Mapped[list["FotoBookORM"]] = relationship(
+        "FotoBookORM", back_populates="book", cascade="all, delete-orphan"
     )
-    autor: Mapped[list["AutorBookORM"]] = relationship(
-        "AutorBookORM", back_populates="autor", cascade="all, delete-orphan"
+
+    authors: Mapped[list["AuthorBookORM"]] = relationship(
+        "AuthorBookORM", back_populates="book", cascade="all, delete-orphan"
     )
 
     def get_schema(self) -> BookFull:
@@ -30,26 +38,32 @@ class FotoBookORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     foto: Mapped[str] = mapped_column(String, nullable=False)
-    book_id: Mapped["BookORM"] = relationship(
-        "BookORM", back_populates="book"
-    )
+    # book_id: Mapped["BookORM"] = relationship(
+    #     "BookORM", back_populates="photo"
+    # )
+
+    book_id: Mapped[int] = mapped_column(Integer, ForeignKey("book.id"))
+    book: Mapped["BookORM"] = relationship("BookORM", back_populates="fotos")
 
     def get_schema(self) -> FotoBookFull:
         return FotoBookFull.from_orm(self)
 
 
-class AutorBookORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin):
-    __tablename__ = "autor_book"
+class AuthorBookORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin):
+    __tablename__ = "author_book"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String, nullable=False)
     foto: Mapped[str] = mapped_column(String, nullable=False)
-    book_id: Mapped["BookORM"] = relationship(
-        "BookORM", back_populates="book"
-    )
+    # book_id: Mapped["BookORM"] = relationship(
+    #     "BookORM", back_populates="authors"
+    # )
 
-    def get_schema(self) -> AutorBookFull:
-        return AutorBookFull.from_orm(self)
+    book_id: Mapped[int] = mapped_column(Integer, ForeignKey("book.id"))
+    book: Mapped["BookORM"] = relationship("BookORM", back_populates="authors")
+
+    def get_schema(self) -> AuthorBookFull:
+        return AuthorBookFull.from_orm(self)
 
 
 class FeedbackORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin):

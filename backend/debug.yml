@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: ${DB__USER}
       POSTGRES_PASSWORD: ${DB__PASS}
     ports:
-      - "${DB__PORT}:${DB__DB_PORT}"
+      - "5433:5432"
     volumes:
       - db_data:/var/lib/postgresql/data:cached
     networks:

@@ -2,8 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Type
 
 from src.database.database import database_accessor
-from ..repositories.document.document import DocumentRepository
-
+from ..repositories.user.user import AdminRepository
 
 from ...database.db_accessor import DatabaseAccessor
 
@@ -12,8 +11,7 @@ from ...database.db_accessor import DatabaseAccessor
 class IUnitOfWork(ABC):
     """Interface for Unit of Work pattern."""
 
-
-    document: Type[DocumentRepository]
+    admin: Type[AdminRepository]
 
     @abstractmethod
     def __init__(self):
@@ -46,8 +44,7 @@ class UnitOfWork:
         """Enter the context manager."""
         self.session = self.session_fabric()
 
-
-        self.document = DocumentRepository(self.session)
+        self.admin = AdminRepository(self.session)
 
     async def __aexit__(self, *args) -> None:
         await self.rollback()

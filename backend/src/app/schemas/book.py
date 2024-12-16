@@ -6,8 +6,10 @@ class BookFull(BaseModel):
     title: str
     description: str
     avatar: str
-    foto: list[str]
-    autor: list[str]
+    # foto: list[str]
+    # autor: list[str]
+    fotos: list[str]
+    authors: list[str]
 
     class Config:
         from_attributes = True
@@ -17,16 +19,18 @@ class FotoBookFull(BaseModel):
     id: int
     foto: str
     book_id: int
+    book: int
 
     class Config:
         from_attributes = True
 
 
-class AutorBookFull(BaseModel):
+class AuthorBookFull(BaseModel):
     id: int
     title: str
     foto: str
     book_id: int
+    book: int
 
     class Config:
         from_attributes = True

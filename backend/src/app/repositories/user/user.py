@@ -2,14 +2,13 @@ from typing import List
 
 from sqlalchemy import insert, select
 
-from src.app.models.document.document import DocumentORM
-from src.app.schemas.document import DocumentData
+from src.app.models.user.user import AdminORM
+from src.app.schemas.user import AdminFull
 from src.app.utils.repository import SQLAlchemyRepository
 
 
-class DocumentRepository(SQLAlchemyRepository):
-    model = DocumentORM
-    document = DocumentORM
+class AdminRepository(SQLAlchemyRepository):
+    model = AdminORM
 
     # async def add_document(self, create_data) -> DocumentData:
     #     stmt = insert(self.book).values(**create_data).returning(self.book)

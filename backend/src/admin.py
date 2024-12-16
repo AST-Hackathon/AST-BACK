@@ -8,42 +8,72 @@ from sqladmin import ModelView
 from sqladmin.authentication import AuthenticationBackend
 from fastapi import Request, Response
 
+from src.app.models.book.book import BookORM, FotoBookORM, AuthorBookORM, FeedbackORM
 
-class MyBackend(AuthenticationBackend):
 
-    async def login(self, request: Request) -> Union[bool, str]:
-        form = await request.form()
-        username, password = form["username"], form["password"]
+class BaseModelView(ModelView):
+    can_create = True
+    can_edit = True
+    can_delete = True
+    can_view_details = True
+    can_export = True
+    page_size = 100
 
-        # token = await UserService.login_user(response, username, password)
-        #
-        # if not token:
-        #     return "Invalid username or password"
-        #
-        # user = await UserService.get_user_by_id(token.user_id)
-        #
-        # if user.role != UserRole.SuperUserRole:
-        #     return "User is not a Super User"
 
-        request.session["token"] = "token.access_token"
-        return True
+class BookAdmin(BaseModelView, model=BookORM):
+    name = "Книга"
+    name_plural = "Книги"
 
-    async def logout(self, request: Request) -> Union[bool, str]:
-        request.session.clear()
-        return "Logged out successfully"
+    column_list = [
+        BookORM.id,
+        BookORM.title,
+        BookORM.description,
+        BookORM.avatar,
+        BookORM.fotos,
+        BookORM.authors
+    ]
 
-    async def authenticate(self, request: Request) -> bool:
-        return "token" in request.session
+
+class FotoBookAdmin(BaseModelView, model=FotoBookORM):
+    name = "Фото книги"
+    name_plural = "Фото книг"
+
+    column_list = [
+        FotoBookORM.id,
+        FotoBookORM.foto,
+        FotoBookORM.book_id,
+        FotoBookORM.book
+    ]
+
+
+class AutorBookAdmin(BaseModelView, model=AuthorBookORM):
+    name = "Автор книги"
+    name_plural = "Авторы книг"
+
+    column_list = [
+        AuthorBookORM.id,
+        AuthorBookORM.title,
+        AuthorBookORM.foto,
+        AuthorBookORM.book_id,
+        AuthorBookORM.book
+    ]
+
+
+class FeedbackAdmin(BaseModelView, model=FeedbackORM):
+    name = "Отзыв"
+    name_plural = "Отзывы"
+
+    column_list = [
+        FeedbackORM.id,
+        FeedbackORM.autor,
+        FeedbackORM.text,
+    ]
 
 
 def create_admin(app, engine):
-    authentication_backend = MyBackend(secret_key="...")
-
-    admin = Admin(
-        app,
-        engine,
-        title="SmileAI",
-        authentication_backend=authentication_backend,
-    )
-
+    admin = Admin(app, engine, title="ACT")
+    admin.add_view(BookAdmin)
+    admin.add_view(FotoBookAdmin)
+    admin.add_view(AutorBookAdmin)
+    admin.add_view(FeedbackAdmin)
     return admin
