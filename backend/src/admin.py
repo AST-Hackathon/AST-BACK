@@ -9,7 +9,6 @@ from sqladmin.authentication import AuthenticationBackend
 from fastapi import Request, Response
 
 
-
 class MyBackend(AuthenticationBackend):
 
     async def login(self, request: Request) -> Union[bool, str]:
@@ -35,8 +34,6 @@ class MyBackend(AuthenticationBackend):
 
     async def authenticate(self, request: Request) -> bool:
         return "token" in request.session
-
-
 
 
 def create_admin(app, engine):

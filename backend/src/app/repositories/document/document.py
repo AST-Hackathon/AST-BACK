@@ -12,7 +12,7 @@ class DocumentRepository(SQLAlchemyRepository):
     document = DocumentORM
 
     # async def add_document(self, create_data) -> DocumentData:
-    #     stmt = insert(self.document).values(**create_data).returning(self.document)
+    #     stmt = insert(self.book).values(**create_data).returning(self.book)
     #     result = await self.session.execute(stmt)
     #     new_document = result.scalar_one()
     #     return new_document.get_schema()

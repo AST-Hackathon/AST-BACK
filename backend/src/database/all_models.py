@@ -1,8 +1,10 @@
-
-from ..app.models.document.document import DocumentORM
-
+from ..app.models.book.book import BookORM, FotoBookORM, AutorBookORM, FeedbackORM
+from ..app.models.user.user import AdminORM
 
 __all__ = [
-    "DocumentORM",
-
+    "BookORM",
+    "FotoBookORM",
+    "AutorBookORM",
+    "FeedbackORM",
+    "AdminORM",
 ]
