@@ -1,10 +1,12 @@
 import uvicorn
-from config.app import app_config
+from src.app_config.app_settings import app_settings
+import warnings
 
 if __name__ == "__main__":
+    warnings.filterwarnings("ignore")
     uvicorn.run(
-        "app.main:app",
-        host=app_config.HOST,
-        port=app_config.PORT,
-        workers=app_config.WORKERS,
+        "src.main:app",
+        host=app_settings.HOST,
+        port=app_settings.PORT,
+        workers=app_settings.WORKERS,
     )

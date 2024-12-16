@@ -5,9 +5,10 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from sqlalchemy import pool
 from alembic import context
 
-from database.db_metadata import Base
-from config.db import db_settings
-from database.models import *  # Необходимо без этого алембик не видит обновления таблиц.
+from src.app_config.config_db import db_settings
+from src.database.database_metadata import Base
+
+from src.database.all_models import *
 
 config = context.config
 

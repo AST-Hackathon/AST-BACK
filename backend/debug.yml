@@ -3,11 +3,11 @@ services:
     container_name: postgres_debug
     image: postgres:13.3
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DB__NAME}
+      POSTGRES_USER: ${DB__USER}
+      POSTGRES_PASSWORD: ${DB__PASS}
     ports:
-      - '5432:5432'
+      - "${DB__PORT}:${DB__DB_PORT}"
     volumes:
       - db_data:/var/lib/postgresql/data:cached
     networks:
