@@ -48,20 +48,5 @@ def create_admin(app, engine):
         title="SmileAI",
         authentication_backend=authentication_backend,
     )
-    admin.add_view(ClientsAdmin)
-    # admin.add_view(AnaliticsAdmin)
-    #
-    admin.add_view(ProductCardAdmin)
-    admin.add_view(ProductShopAdmin)
-    admin.add_view(ProductPromocodeAdmin)
-    admin.add_view(ProductTagAdmin)
-    admin.add_view(PromoAdmin)
-    admin.add_view(ProductShopLinkAdmin)
-    admin.add_view(ProductToPromocodeAdmin)
-    admin.add_view(ProductToTagAdmin)
-    admin.add_view(StoryAdmin)
-    admin.add_view(ContentAdmin)
-    admin.add_view(ProductBunchAdmin)
-    admin.add_view(UserAnswersSRAdmin)
 
     return admin

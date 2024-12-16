@@ -6,7 +6,6 @@ from fastapi import UploadFile, Form, HTTPException, status
 
 from src.app.schemas.document import DocumentData
 from src.app.utils.unitofwork import IUnitOfWork, UnitOfWork
-from src.s3repo.DocumentS3Repo import document_storage
 
 MAX_FILE_NAME_LENGTH = 32
 
