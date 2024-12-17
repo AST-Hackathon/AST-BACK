@@ -2,19 +2,15 @@ from pydantic import BaseModel
 
 
 class FotoBookFull(BaseModel):
-    id: int
     foto: str
-    book_id: int
 
     class Config:
         from_attributes = True
 
 
 class AuthorBookFull(BaseModel):
-    id: int
     title: str
     foto: str
-    book_id: int
 
     class Config:
         from_attributes = True
@@ -27,6 +23,15 @@ class BookFull(BaseModel):
     avatar: str
     fotos: list[FotoBookFull] = []
     authors: list[AuthorBookFull] = []
+
+    class Config:
+        from_attributes = True
+
+
+class BookAllFull(BaseModel):
+    id: int
+    title: str
+    photo_preview: str | None
 
     class Config:
         from_attributes = True

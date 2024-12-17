@@ -11,3 +11,9 @@ router = APIRouter(tags=['Book'], prefix='/book')
 async def get_all_book():
     """Получение списка всех книг."""
     return await BookService.get_all()
+
+
+@router.get('/{id}', status_code=status.HTTP_200_OK)
+async def get_book(id: int):
+    """Получение конкретной книги по id."""
+    return await BookService.get_book(id=id)

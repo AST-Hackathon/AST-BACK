@@ -5,6 +5,9 @@ class BookService:
     @classmethod
     async def get_all(cls, uow: IUnitOfWork = UnitOfWork()):
         async with uow:
-            result = await uow.book.get_all()
-            print(111111111111111111111111111111111111, result)
-            return result
+            return await uow.book.get_all()
+
+    @classmethod
+    async def get_book(cls, id: int, uow: IUnitOfWork = UnitOfWork()):
+        async with uow:
+            return await uow.book.get_by_id(id)

@@ -30,6 +30,7 @@ class BookAdmin(BaseModelView, model=BookORM):
         BookORM.description,
         BookORM.avatar,
         BookORM.fotos,
+        BookORM.photo_preview,
         BookORM.authors
     ]
 

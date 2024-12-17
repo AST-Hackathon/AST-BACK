@@ -14,6 +14,7 @@ class BookORM(Base, CreationDateMixin, UpdateDateMixin):
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
     avatar: Mapped[str] = mapped_column(String, nullable=False)
+    photo_preview: Mapped[str] = mapped_column(String, nullable=True)
 
     fotos: Mapped[list["FotoBookORM"]] = relationship(
         "FotoBookORM", back_populates="book", cascade="all, delete-orphan"
