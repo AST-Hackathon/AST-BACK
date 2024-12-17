@@ -8,9 +8,9 @@ from src.app.utils.repository import SQLAlchemyRepository
 class BookRepository(SQLAlchemyRepository):
     model = BookORM
 
-    async def get_all(self):
+    async def get_all(self, id: int):
         stmt = (
-            select(self.model)
+            select(self.model).where(self.model.id != id)
         )
 
         res = await self.session.execute(stmt)

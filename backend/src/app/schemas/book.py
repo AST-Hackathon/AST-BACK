@@ -21,8 +21,8 @@ class BookFull(BaseModel):
     title: str
     description: str
     avatar: str
-    fotos: list[FotoBookFull] = []
-    authors: list[AuthorBookFull] = []
+    fotos: list[FotoBookFull]
+    authors: list[AuthorBookFull]
 
     class Config:
         from_attributes = True
@@ -38,8 +38,7 @@ class BookAllFull(BaseModel):
 
 
 class FeedbackFull(BaseModel):
-    id: int
-    autor: str
+    author: str
     text: str
 
     class Config:

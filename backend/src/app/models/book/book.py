@@ -59,7 +59,7 @@ class FeedbackORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin):
     __tablename__ = "feedback"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    autor: Mapped[str] = mapped_column(String, nullable=False)
+    author: Mapped[str] = mapped_column(String, nullable=False)
     text: Mapped[str] = mapped_column(String, nullable=False)
 
     def get_schema(self) -> FeedbackFull:

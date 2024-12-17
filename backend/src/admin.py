@@ -66,7 +66,7 @@ class FeedbackAdmin(BaseModelView, model=FeedbackORM):
 
     column_list = [
         FeedbackORM.id,
-        FeedbackORM.autor,
+        FeedbackORM.author,
         FeedbackORM.text,
     ]
 
