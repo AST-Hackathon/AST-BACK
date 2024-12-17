@@ -3,6 +3,7 @@ from typing import Type
 
 from src.database.database import database_accessor
 from ..repositories.user.user import AdminRepository
+from ..repositories.book.book import BookRepository
 
 from ...database.db_accessor import DatabaseAccessor
 
@@ -12,6 +13,7 @@ class IUnitOfWork(ABC):
     """Interface for Unit of Work pattern."""
 
     admin: Type[AdminRepository]
+    book: Type[BookRepository]
 
     @abstractmethod
     def __init__(self):
@@ -45,6 +47,7 @@ class UnitOfWork:
         self.session = self.session_fabric()
 
         self.admin = AdminRepository(self.session)
+        self.book = BookRepository(self.session)
 
     async def __aexit__(self, *args) -> None:
         await self.rollback()

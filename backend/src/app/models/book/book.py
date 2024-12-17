@@ -14,12 +14,6 @@ class BookORM(Base, CreationDateMixin, UpdateDateMixin):
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
     avatar: Mapped[str] = mapped_column(String, nullable=False)
-    # foto: Mapped[list["FotoBookORM"]] = relationship(
-    #     "FotoBookORM", back_populates="books", cascade="all, delete-orphan"
-    # )
-    # autor: Mapped[list["AuthorBookORM"]] = relationship(
-    #     "AuthorBookORM", back_populates="books", cascade="all, delete-orphan"
-    # )
 
     fotos: Mapped[list["FotoBookORM"]] = relationship(
         "FotoBookORM", back_populates="book", cascade="all, delete-orphan"
@@ -38,9 +32,6 @@ class FotoBookORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     foto: Mapped[str] = mapped_column(String, nullable=False)
-    # book_id: Mapped["BookORM"] = relationship(
-    #     "BookORM", back_populates="photo"
-    # )
 
     book_id: Mapped[int] = mapped_column(Integer, ForeignKey("book.id"))
     book: Mapped["BookORM"] = relationship("BookORM", back_populates="fotos")
@@ -55,9 +46,6 @@ class AuthorBookORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String, nullable=False)
     foto: Mapped[str] = mapped_column(String, nullable=False)
-    # book_id: Mapped["BookORM"] = relationship(
-    #     "BookORM", back_populates="authors"
-    # )
 
     book_id: Mapped[int] = mapped_column(Integer, ForeignKey("book.id"))
     book: Mapped["BookORM"] = relationship("BookORM", back_populates="authors")

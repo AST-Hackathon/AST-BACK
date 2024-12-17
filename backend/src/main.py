@@ -6,7 +6,7 @@ from fastapi_cache.backends.redis import RedisBackend
 
 from starlette import status
 
-# from .app.api.router import router as api_router
+from .app.api.router import router as api_router
 from src.app_config.app_settings import app_settings
 from src.database.database import database_accessor
 from src.admin import create_admin
@@ -49,7 +49,7 @@ def get_app() -> FastAPI:
 
     bind_events(app)
     bind_exceptions(app)
-    # app.include_router(api_router)
+    app.include_router(api_router)
     app.add_middleware(
             CORSMiddleware,
             allow_origins="*",
