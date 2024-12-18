@@ -1,6 +1,6 @@
 from sqlalchemy import Integer, String, ForeignKey
-from sqlalchemy.orm import mapped_column, Mapped, relationship
-
+from sqlalchemy.orm import mapped_column, Mapped, relationship, validates
+import validators
 from src.app.schemas.book import BookFull, FotoBookFull, AuthorBookFull, FeedbackFull
 from src.database.database_metadata import Base
 
@@ -15,7 +15,7 @@ class BookORM(Base, CreationDateMixin, UpdateDateMixin):
     description: Mapped[str] = mapped_column(String, nullable=False)
     avatar: Mapped[str] = mapped_column(String, nullable=False)
     photo_preview: Mapped[str] = mapped_column(String, nullable=True)
-
+    url: Mapped[str] = mapped_column(String, nullable=True)
     fotos: Mapped[list["FotoBookORM"]] = relationship(
         "FotoBookORM", back_populates="book", cascade="all, delete-orphan"
     )
@@ -23,6 +23,12 @@ class BookORM(Base, CreationDateMixin, UpdateDateMixin):
     authors: Mapped[list["AuthorBookORM"]] = relationship(
         "AuthorBookORM", back_populates="book", cascade="all, delete-orphan"
     )
+
+    @validates('url')
+    def validate_url(self, key, url):
+        if url is not None and not validators.url(url):
+            raise ValueError("Invalid URL format")
+        return url
 
     def get_schema(self) -> BookFull:
         return BookFull.from_orm(self)

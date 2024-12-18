@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 
 class FotoBookFull(BaseModel):
@@ -21,6 +21,7 @@ class BookFull(BaseModel):
     title: str
     description: str
     avatar: str
+    url: HttpUrl = None
     fotos: list[FotoBookFull]
     authors: list[AuthorBookFull]
 
