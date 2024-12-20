@@ -1,5 +1,4 @@
 from src.app.models.book.book import FeedbackORM
-from src.app.schemas.book import FeedbackFull
 from src.app.utils.repository import SQLAlchemyRepository
 
 

@@ -189,9 +189,9 @@ class ThemePageAdmin(BaseModelView, model=ThemePageORM):
 
 def create_admin(app, engine):
     admin = Admin(app, engine, title="ACT")
+    admin.add_view(ThemePageAdmin)
     admin.add_view(BookAdmin)
     admin.add_view(FotoBookAdmin)
     admin.add_view(AutorBookAdmin)
     admin.add_view(FeedbackAdmin)
-    admin.add_view(ThemePageAdmin)
     return admin

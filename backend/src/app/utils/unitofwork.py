@@ -5,6 +5,7 @@ from src.database.database import database_accessor
 from ..repositories.user.user import AdminRepository
 from ..repositories.book.book import BookRepository
 from ..repositories.feedback.feedback import FeedbackRepository
+from ..repositories.theme_page.theme_page import ThemePageRepository
 
 from ...database.db_accessor import DatabaseAccessor
 
@@ -16,6 +17,7 @@ class IUnitOfWork(ABC):
     admin: Type[AdminRepository]
     book: Type[BookRepository]
     feedback: Type[FeedbackRepository]
+    theme_page: Type[ThemePageRepository]
 
     @abstractmethod
     def __init__(self):
@@ -51,6 +53,7 @@ class UnitOfWork:
         self.admin = AdminRepository(self.session)
         self.book = BookRepository(self.session)
         self.feedback = FeedbackRepository(self.session)
+        self.theme_page = ThemePageRepository(self.session)
 
     async def __aexit__(self, *args) -> None:
         await self.rollback()
