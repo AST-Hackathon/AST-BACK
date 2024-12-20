@@ -8,7 +8,7 @@ from src.app.schemas.book import BookFull, BookAllFull
 router = APIRouter(tags=['Book'], prefix='/book')
 
 
-@router.get('/all', status_code=status.HTTP_200_OK, response_model=List[BookAllFull])
+@router.get('/all/', status_code=status.HTTP_200_OK, response_model=List[BookAllFull])
 async def get_all_book(id: int):
     """Получение списка всех книг кроме текущего, на странице которого находимся. Надо передать её id."""
     return await BookService.get_all(id=id)
