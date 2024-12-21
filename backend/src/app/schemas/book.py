@@ -39,9 +39,10 @@ class BookFull(BaseModel):
     title: str
     description: str
     avatar: str
-    url: HttpUrl = None
+    url: HttpUrl | None = None
     fotos: list[FotoBookFull]
     authors: list[AuthorBookFull]
+
     illustrators: list[IllustratorBookFull]
     constructors: list[ConstructorBookFull]
 

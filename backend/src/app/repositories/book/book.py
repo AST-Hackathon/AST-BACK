@@ -1,7 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 from src.app.models.book.book import BookORM
-from src.app.schemas.book import BookFull, AuthorBookFull, FotoBookFull, BookAllFull
+from src.app.schemas.book import (BookFull, AuthorBookFull, FotoBookFull, BookAllFull, IllustratorBookFull,
+                                  ConstructorBookFull)
 from src.app.utils.repository import SQLAlchemyRepository
 
 
@@ -26,6 +27,8 @@ class BookRepository(SQLAlchemyRepository):
         stmt = (
             select(self.model)
             .options(joinedload(self.model.authors))
+            .options(joinedload(self.model.illustrators))
+            .options(joinedload(self.model.constructors))
             .options(joinedload(self.model.fotos))
             .where(self.model.id == id)
         )
@@ -35,10 +38,14 @@ class BookRepository(SQLAlchemyRepository):
         book = res.scalars().first()
 
         authors_full = [AuthorBookFull.from_orm(author) for author in book.authors]
+        illustrators_full = [IllustratorBookFull.from_orm(illustrator) for illustrator in book.illustrators]
+        constructors_full = [IllustratorBookFull.from_orm(constructor) for constructor in book.constructors]
         fotos_full = [FotoBookFull.from_orm(foto) for foto in book.fotos]
 
         book_full = BookFull.from_orm(book)
         book_full.authors = authors_full
+        book_full.illustrators = illustrators_full
+        book_full.constructors = constructors_full
         book_full.fotos = fotos_full
 
         return book_full

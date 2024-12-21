@@ -226,6 +226,20 @@ http://localhost:8080
       "title": "string",
       "foto": "string"
     }
+  ],
+  "illustrators": [
+    {
+      "title": "string",
+      "description": "string",
+      "foto": "string"
+    }
+  ],
+  "constructors": [
+    {
+      "title": "string",
+      "description": "string",
+      "foto": "string"
+    }
   ]
 }
 ```
