@@ -1,7 +1,7 @@
-from sqladmin import Admin
-from sqladmin import ModelView
+from sqladmin import ModelView, Admin
 
-from src.app.models.book.book import BookORM, FotoBookORM, AuthorBookORM, FeedbackORM
+from src.app.models.book.book import (BookORM, FotoBookORM, AuthorBookORM, FeedbackORM, ConstructorBookORM,
+                                      IllustratorBookORM)
 from src.app.models.theme_page.theme_page import ThemePageORM
 
 
@@ -62,6 +62,8 @@ class BookAdmin(BaseModelView, model=BookORM):
         BookORM.fotos: "Фото",
         BookORM.photo_preview: "Предпросмотр фото",
         BookORM.authors: "Авторы",
+        BookORM.illustrators: "Иллюстратор",
+        BookORM.constructors: "Бумажный конструктор",
         BookORM.url: "Ссылка на книгу",
         BookORM.creation_date: "Дата создания",
         BookORM.update_date: "Дата обновления"
@@ -117,6 +119,70 @@ class AutorBookAdmin(BaseModelView, model=AuthorBookORM):
         AuthorBookORM.book: "Книга",
         AuthorBookORM.creation_date: "Дата создания",
         AuthorBookORM.update_date: "Дата обновления"
+    }
+
+
+class IllustratorBookAdmin(BaseModelView, model=IllustratorBookORM):
+    name = "Иллюстратор книги"
+    name_plural = "Иллюстраторы книг"
+
+    BASE_LIST = [BaseModelView.BASE_LIST[0]] + [
+        IllustratorBookORM.title,
+        IllustratorBookORM.foto,
+        IllustratorBookORM.book_id,
+        IllustratorBookORM.book,
+        IllustratorBookORM.description,
+    ] + BaseModelView.BASE_LIST[1:]
+
+    column_searchable_list = [
+        IllustratorBookORM.title,
+        IllustratorBookORM.description
+    ]
+
+    column_sortable_list = BASE_LIST
+    column_list = BASE_LIST
+
+    column_labels = {
+        IllustratorBookORM.id: "ID",
+        IllustratorBookORM.title: "ФИО автора",
+        IllustratorBookORM.description: "Описание",
+        IllustratorBookORM.foto: "Фото",
+        IllustratorBookORM.book_id: "ID Книги",
+        IllustratorBookORM.book: "Книга",
+        IllustratorBookORM.creation_date: "Дата создания",
+        IllustratorBookORM.update_date: "Дата обновления"
+    }
+
+
+class ConstructorBookAdmin(BaseModelView, model=ConstructorBookORM):
+    name = "Бумажный конструктор книги"
+    name_plural = "Бумажные конструкторы книг"
+
+    BASE_LIST = [BaseModelView.BASE_LIST[0]] + [
+        ConstructorBookORM.title,
+        ConstructorBookORM.foto,
+        ConstructorBookORM.book_id,
+        ConstructorBookORM.book,
+        ConstructorBookORM.description,
+    ] + BaseModelView.BASE_LIST[1:]
+
+    column_searchable_list = [
+        IllustratorBookORM.title,
+        IllustratorBookORM.description
+    ]
+
+    column_sortable_list = BASE_LIST
+    column_list = BASE_LIST
+
+    column_labels = {
+        ConstructorBookORM.id: "ID",
+        ConstructorBookORM.title: "ФИО автора",
+        ConstructorBookORM.description: "Описание",
+        ConstructorBookORM.foto: "Фото",
+        ConstructorBookORM.book_id: "ID Книги",
+        ConstructorBookORM.book: "Книга",
+        ConstructorBookORM.creation_date: "Дата создания",
+        ConstructorBookORM.update_date: "Дата обновления"
     }
 
 
@@ -193,5 +259,7 @@ def create_admin(app, engine):
     admin.add_view(BookAdmin)
     admin.add_view(FotoBookAdmin)
     admin.add_view(AutorBookAdmin)
+    admin.add_view(IllustratorBookAdmin)
+    admin.add_view(ConstructorBookAdmin)
     admin.add_view(FeedbackAdmin)
     return admin

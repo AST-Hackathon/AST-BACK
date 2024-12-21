@@ -16,6 +16,24 @@ class AuthorBookFull(BaseModel):
         from_attributes = True
 
 
+class IllustratorBookFull(BaseModel):
+    title: str
+    description: str
+    foto: str
+
+    class Config:
+        from_attributes = True
+
+
+class ConstructorBookFull(BaseModel):
+    title: str
+    description: str
+    foto: str
+
+    class Config:
+        from_attributes = True
+
+
 class BookFull(BaseModel):
     id: int
     title: str
@@ -24,6 +42,8 @@ class BookFull(BaseModel):
     url: HttpUrl = None
     fotos: list[FotoBookFull]
     authors: list[AuthorBookFull]
+    illustrators: list[IllustratorBookFull]
+    constructors: list[ConstructorBookFull]
 
     class Config:
         from_attributes = True
