@@ -40,11 +40,11 @@ def bind_events(app: FastAPI) -> None:
 
 def get_app() -> FastAPI:
     app = FastAPI(
-        title="Hahaton",
+        title="АСТ",
         version="0.1.0",
-        description="Hahaton",
+        description="АСТ",
         docs_url="/swagger",
-        openapi_url="/api/test",
+        openapi_url="/api",
     )
 
     bind_events(app)

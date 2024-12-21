@@ -1,10 +1,8 @@
-from typing import Any, List
+from typing import List
 
-from fastapi import APIRouter, status, UploadFile, Form
-
-from src.app.services.feedback import FeedbackService
+from fastapi import APIRouter, status
 from src.app.schemas.book import FeedbackFull
-
+from src.app.services.feedback import FeedbackService
 
 router = APIRouter(tags=['Feedback'], prefix='/feedback')
 
