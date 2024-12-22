@@ -4,6 +4,7 @@ from src.app.utils.ftp_repo import FTPClient
 import aiofiles
 from src.redisrepo.dependencies import get_ftp_client
 import os
+import urllib.parse
 
 router = APIRouter(tags=["UploadFileOnFTP"], prefix="/file")
 
@@ -20,4 +21,9 @@ async def upload_file(file: UploadFile = File(...), ftp_client: FTPClient = Depe
 
     os.remove(file.filename)
 
-    return {"file_url": f"http://{ftp_client.server.host}{remote_file_path}"}
+    encoded_path = urllib.parse.quote(remote_file_path)
+    correct_path = f"{encoded_path}/{file.filename}"
+
+    return {
+        "file_url": f"https://app.sftpcloud.io/sftp-instances/b95d9f64-d5f2-4ec7-81cd-0f8e38a92f64/file-manager/download-url?downloadedFilePath={correct_path}"
+    }

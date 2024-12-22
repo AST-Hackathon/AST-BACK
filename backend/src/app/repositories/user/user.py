@@ -1,5 +1,3 @@
-
-
 from src.app.models.user.user import AdminORM
 from src.app.utils.repository import SQLAlchemyRepository
 
