@@ -1,9 +1,6 @@
-from typing import List
 
-from sqlalchemy import insert, select
 
 from src.app.models.user.user import AdminORM
-from src.app.schemas.user import AdminFull
 from src.app.utils.repository import SQLAlchemyRepository
 
 

@@ -5,7 +5,7 @@ from typing import Annotated
 from pydantic import Field
 
 from sqlalchemy import String, Integer
-from sqlalchemy.orm import mapped_column, declarative_base
+from sqlalchemy.orm import mapped_column
 from sqlalchemy.dialects.postgresql import UUID as SQLAlchemyUUID
 
 

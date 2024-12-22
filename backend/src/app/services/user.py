@@ -1,8 +1,4 @@
-import os
-from typing import List
 
-import cyrtranslit
-from fastapi import UploadFile, Form, HTTPException, status
 
 from src.app.schemas.user import AdminFull
 from src.app.utils.unitofwork import IUnitOfWork, UnitOfWork

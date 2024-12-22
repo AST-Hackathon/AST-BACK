@@ -1,13 +1,10 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
 
 from starlette import status
 
 from .app.api.router import router as api_router
-from src.app_config.app_settings import app_settings
 from src.database.database import database_accessor
 from src.admin import create_admin
 from src.app_config.config_redis import RedisRepository

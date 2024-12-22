@@ -7,7 +7,6 @@ from src.app.schemas.book import (
     FotoBookFull,
     BookAllFull,
     IllustratorBookFull,
-    ConstructorBookFull,
 )
 from src.app.utils.repository import SQLAlchemyRepository
 

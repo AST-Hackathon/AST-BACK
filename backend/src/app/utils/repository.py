@@ -1,6 +1,5 @@
 from abc import ABC
 
-from fastapi import HTTPException, status
 from sqlalchemy import insert, select, update, delete, literal_column
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.app.repositories.exceptions import DataBase404Exception

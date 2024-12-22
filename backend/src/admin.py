@@ -3,8 +3,7 @@ import binascii
 import os
 from sqladmin import ModelView, Admin
 from sqladmin.authentication import AuthenticationBackend
-from fastapi import Request, Form
-from fastapi.responses import RedirectResponse
+from fastapi import Request
 from src.app.models.book.book import (
     BookORM,
     FotoBookORM,
@@ -15,7 +14,6 @@ from src.app.models.book.book import (
 )
 from src.app.models.theme_page.theme_page import ThemePageORM
 from starlette.authentication import (
-    requires,
     AuthCredentials,
     SimpleUser,
     AuthenticationError,
