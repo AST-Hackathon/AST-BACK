@@ -1,9 +1,53 @@
+import base64
+import binascii
+import os
 from sqladmin import ModelView, Admin
-
+from sqladmin.authentication import AuthenticationBackend
+from fastapi import Request, Form
+from fastapi.responses import RedirectResponse
 from src.app.models.book.book import (BookORM, FotoBookORM, AuthorBookORM, FeedbackORM, ConstructorBookORM,
                                       IllustratorBookORM)
 from src.app.models.theme_page.theme_page import ThemePageORM
+from starlette.authentication import requires, AuthCredentials, SimpleUser, AuthenticationError
 
+secret_key = "8e6df0531e17149e7d7681be472c6393f7579ac0d595135a90a1b59990d4d6a9"
+
+class BasicAuthBackend(AuthenticationBackend):
+    def __init__(self, secret_key: str):
+        super().__init__(secret_key=secret_key)
+
+    async def authenticate(self, request: Request):
+        if "Authorization" not in request.headers:
+            return
+
+        auth = request.headers["Authorization"]
+        try:
+            scheme, credentials = auth.split()
+            if scheme.lower() != 'basic':
+                return
+
+            decoded = base64.b64decode(credentials).decode("ascii")
+            username, _, password = decoded.partition(":")
+            if username == "admin" and password == "password":
+                return AuthCredentials(["authenticated"]), SimpleUser(username)
+        except (ValueError, UnicodeDecodeError, binascii.Error):
+            raise AuthenticationError('Invalid basic auth credentials')
+
+        raise AuthenticationError('Invalid basic auth credentials')
+
+    async def login(self, request: Request):
+        form = await request.form()
+        username = form.get("username")
+        password = form.get("password")
+
+        if username == "admin" and password == "password":
+            request.session.update({"user": username})
+            return True
+
+        return False
+
+    async def logout(self, request: Request):
+        request.session.clear()
 
 class BaseModelView(ModelView):
     can_create = True
@@ -32,7 +76,6 @@ class BaseModelView(ModelView):
         'creation_date',
         'update_date'
     ]
-
 
 class BookAdmin(BaseModelView, model=BookORM):
     name = "Книга"
@@ -69,7 +112,6 @@ class BookAdmin(BaseModelView, model=BookORM):
         BookORM.update_date: "Дата обновления"
     }
 
-
 class FotoBookAdmin(BaseModelView, model=FotoBookORM):
     name = "Фото книги"
     name_plural = "Фото книг"
@@ -91,7 +133,6 @@ class FotoBookAdmin(BaseModelView, model=FotoBookORM):
         FotoBookORM.creation_date: "Дата создания",
         FotoBookORM.update_date: "Дата обновления"
     }
-
 
 class AutorBookAdmin(BaseModelView, model=AuthorBookORM):
     name = "Автор книги"
@@ -120,7 +161,6 @@ class AutorBookAdmin(BaseModelView, model=AuthorBookORM):
         AuthorBookORM.creation_date: "Дата создания",
         AuthorBookORM.update_date: "Дата обновления"
     }
-
 
 class IllustratorBookAdmin(BaseModelView, model=IllustratorBookORM):
     name = "Иллюстратор книги"
@@ -153,7 +193,6 @@ class IllustratorBookAdmin(BaseModelView, model=IllustratorBookORM):
         IllustratorBookORM.update_date: "Дата обновления"
     }
 
-
 class ConstructorBookAdmin(BaseModelView, model=ConstructorBookORM):
     name = "Бумажный конструктор книги"
     name_plural = "Бумажные конструкторы книг"
@@ -185,7 +224,6 @@ class ConstructorBookAdmin(BaseModelView, model=ConstructorBookORM):
         ConstructorBookORM.update_date: "Дата обновления"
     }
 
-
 class FeedbackAdmin(BaseModelView, model=FeedbackORM):
     name = "Отзыв"
     name_plural = "Отзывы"
@@ -212,7 +250,6 @@ class FeedbackAdmin(BaseModelView, model=FeedbackORM):
         FeedbackORM.creation_date: "Дата создания",
         FeedbackORM.update_date: "Дата обновления"
     }
-
 
 class ThemePageAdmin(BaseModelView, model=ThemePageORM):
     name = "Тема главной страницы"
@@ -252,9 +289,10 @@ class ThemePageAdmin(BaseModelView, model=ThemePageORM):
         ThemePageORM.update_date: "Дата обновления"
     }
 
-
 def create_admin(app, engine):
-    admin = Admin(app, engine, title="ACT")
+    secret_key = os.getenv("SECRET_KEY")
+    authentication_backend = BasicAuthBackend(secret_key=secret_key)
+    admin = Admin(app, engine, title="ACT", authentication_backend=authentication_backend)
     admin.add_view(ThemePageAdmin)
     admin.add_view(BookAdmin)
     admin.add_view(FotoBookAdmin)
