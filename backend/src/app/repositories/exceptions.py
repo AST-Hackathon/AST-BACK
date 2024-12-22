@@ -8,10 +8,12 @@ class DataBase404Exception(HTTPException):
         detail = f"Not found in {base} data with primary key = {value}"
         super().__init__(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
 
+
 class SmileRoomNotPromoException(HTTPException):
     def __init__(self, id: int, promo: str) -> None:
         detail = f"Product with id:{id} is not in promo '{promo}'"
         super().__init__(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
+
 
 class DataBase409Exception(HTTPException):
     def __init__(self, message: Any) -> None:
@@ -33,9 +35,7 @@ class UnavailableLoginException(HTTPException):
 
 class InvalidTokenException(HTTPException):
     def __init__(self):
-        super().__init__(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
-        )
+        super().__init__(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
 
 
 class TokenExpiredException(HTTPException):
@@ -64,9 +64,7 @@ class InvalidClinicID(HTTPException):
 
 class UserNotActiveException(HTTPException):
     def __init__(self):
-        super().__init__(
-            status_code=status.HTTP_403_FORBIDDEN, detail="User is not active"
-        )
+        super().__init__(status_code=status.HTTP_403_FORBIDDEN, detail="User is not active")
 
 
 class UserNotFoundException(HTTPException):
@@ -85,30 +83,26 @@ class UserNotAuthorizedException(HTTPException):
 
 class UserPrivilegesException(HTTPException):
     def __init__(self):
-        super().__init__(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Недостаточно прав"
-        )
+        super().__init__(status_code=status.HTTP_403_FORBIDDEN, detail="Недостаточно прав")
 
 
 class EnumExistenceException(HTTPException):
     def __init__(self, invalid_enum: str, enum_schema_name: str):
         detail = f"Enum {invalid_enum} doesn`t exist in {enum_schema_name}"
-        super().__init__(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=detail
-        )
+        super().__init__(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=detail)
 
 
 class StoriesContentError(HTTPException):
     def __init__(self, story_id: int, msg: str):
         detail = f"Story ({story_id}) error with content:{msg}"
-        super().__init__(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=detail
-        )
+        super().__init__(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=detail)
+
 
 class ProductNotFoundException(Exception):
     def __init__(self, product_id: int):
         self.product_id = product_id
         super().__init__(f"Product with ID {product_id} not found.")
+
 
 class InvalidURLError(Exception):
     def __init__(self, url: str):

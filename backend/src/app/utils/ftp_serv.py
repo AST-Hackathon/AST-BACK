@@ -1,6 +1,7 @@
 import aioftp
 from src.app_config.config_ftp import FTPSettings
 
+
 class FTPServer:
     def __init__(self):
         settings = FTPSettings()
@@ -18,4 +19,3 @@ class FTPServer:
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         if self.ftp:
             await self.ftp.quit()
-            

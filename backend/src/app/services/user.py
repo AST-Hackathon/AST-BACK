@@ -12,16 +12,14 @@ class UserService:
 
     @classmethod
     async def create_admin(
-            cls,
-            id: int,
-            login: str,
-            email: str,
-            password: str,
-            uow: IUnitOfWork = UnitOfWork(),
+        cls,
+        id: int,
+        login: str,
+        email: str,
+        password: str,
+        uow: IUnitOfWork = UnitOfWork(),
     ) -> AdminFull:
         async with uow:
-            result = await uow.admin.add_one(
-                data=dict(id=id, login=login, email=email, password=password)
-            )
+            result = await uow.admin.add_one(data=dict(id=id, login=login, email=email, password=password))
             await uow.commit()
         return result

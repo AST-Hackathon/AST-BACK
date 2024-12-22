@@ -1,8 +1,14 @@
 from sqlalchemy import Integer, String, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship, validates
 import validators
-from src.app.schemas.book import (BookFull, FotoBookFull, AuthorBookFull, FeedbackFull, IllustratorBookFull,
-                                  ConstructorBookFull)
+from src.app.schemas.book import (
+    BookFull,
+    FotoBookFull,
+    AuthorBookFull,
+    FeedbackFull,
+    IllustratorBookFull,
+    ConstructorBookFull,
+)
 from src.database.database_metadata import Base
 
 from src.app.models.mixin import IsActiveMixin, CreationDateMixin, UpdateDateMixin
@@ -34,9 +40,9 @@ class BookORM(Base, CreationDateMixin, UpdateDateMixin):
     )
 
     def __str__(self):
-        return f'{self.title}'
+        return f"{self.title}"
 
-    @validates('url')
+    @validates("url")
     def validate_url(self, key, url):
         if url is not None and not validators.url(url):
             raise ValueError("Invalid URL format")
@@ -70,7 +76,7 @@ class AuthorBookORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin):
     book: Mapped["BookORM"] = relationship("BookORM", back_populates="authors")
 
     def __str__(self):
-        return f'{self.title}'
+        return f"{self.title}"
 
     def get_schema(self) -> AuthorBookFull:
         return AuthorBookFull.from_orm(self)
@@ -88,7 +94,7 @@ class IllustratorBookORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin
     book: Mapped["BookORM"] = relationship("BookORM", back_populates="illustrators")
 
     def __str__(self):
-        return f'{self.title}'
+        return f"{self.title}"
 
     def get_schema(self) -> IllustratorBookFull:
         return IllustratorBookFull.from_orm(self)
@@ -106,7 +112,7 @@ class ConstructorBookORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin
     book: Mapped["BookORM"] = relationship("BookORM", back_populates="constructors")
 
     def __str__(self):
-        return f'{self.title}'
+        return f"{self.title}"
 
     def get_schema(self) -> ConstructorBookFull:
         return ConstructorBookFull.from_orm(self)
@@ -120,7 +126,7 @@ class FeedbackORM(Base, IsActiveMixin, CreationDateMixin, UpdateDateMixin):
     text: Mapped[str] = mapped_column(String, nullable=False)
 
     def __str__(self):
-        return f'{self.author} {self.text[:10]}'
+        return f"{self.author} {self.text[:10]}"
 
     def get_schema(self) -> FeedbackFull:
         return FeedbackFull.from_orm(self)

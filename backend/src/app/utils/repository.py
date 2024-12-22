@@ -22,22 +22,12 @@ class SQLAlchemyRepository(AbstractRepository):
         return res.mappings().first()
 
     async def edit_one(self, id: int, data: dict):
-        stmt = (
-            update(self.model)
-            .values(**data)
-            .filter_by(id=id)
-            .returning(literal_column("*"))
-        )
+        stmt = update(self.model).values(**data).filter_by(id=id).returning(literal_column("*"))
         res = await self.session.execute(stmt)
         return res.mappings().first()
 
     async def edit_by_filter(self, filters: dict, data: dict) -> int:
-        stmt = (
-            update(self.model)
-            .values(**data)
-            .filter_by(**filters)
-            .returning(self.model.id)
-        )
+        stmt = update(self.model).values(**data).filter_by(**filters).returning(self.model.id)
         res = await self.session.execute(stmt)
         return res.scalar_one()
 
@@ -85,21 +75,12 @@ class SQLAlchemyRepository(AbstractRepository):
         return res
 
     async def delete(self, **filter_by) -> None:
-        stmt = (
-            delete(self.model)
-            .filter_by(**filter_by)
-            .returning(literal_column("*"))
-        )
+        stmt = delete(self.model).filter_by(**filter_by).returning(literal_column("*"))
         res = await self.session.execute(stmt)
         return
 
     async def soft_delete(self, id: int) -> None:
-        stmt = (
-            update(self.model)
-            .filter_by(id=id)
-            .values(is_active=False)
-            .returning(literal_column("*"))
-        )
+        stmt = update(self.model).filter_by(id=id).values(is_active=False).returning(literal_column("*"))
         res = await self.session.execute(stmt)
         return res
 

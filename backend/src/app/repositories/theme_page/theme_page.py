@@ -8,10 +8,7 @@ class ThemePageRepository(SQLAlchemyRepository):
     model = ThemePageORM
 
     async def get_active(self):
-        stmt = (
-            select(self.model)
-            .where(self.model.is_active)
-        )
+        stmt = select(self.model).where(self.model.is_active)
 
         res = await self.session.execute(stmt)
         theme_page = res.scalars().first()

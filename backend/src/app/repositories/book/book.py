@@ -1,8 +1,14 @@
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 from src.app.models.book.book import BookORM
-from src.app.schemas.book import (BookFull, AuthorBookFull, FotoBookFull, BookAllFull, IllustratorBookFull,
-                                  ConstructorBookFull)
+from src.app.schemas.book import (
+    BookFull,
+    AuthorBookFull,
+    FotoBookFull,
+    BookAllFull,
+    IllustratorBookFull,
+    ConstructorBookFull,
+)
 from src.app.utils.repository import SQLAlchemyRepository
 
 
@@ -10,9 +16,7 @@ class BookRepository(SQLAlchemyRepository):
     model = BookORM
 
     async def get_all(self, id: int):
-        stmt = (
-            select(self.model).where(self.model.id != id)
-        )
+        stmt = select(self.model).where(self.model.id != id)
 
         res = await self.session.execute(stmt)
         books = res.scalars().unique().all()

@@ -25,24 +25,15 @@ class DBSettings(BaseSettings):
 
     @cached_property
     def dsn_async(self):
-        return (
-            f"postgresql+asyncpg://{self.USER}:{self.PASS}"
-            f"@{self.HOST}:{self.PORT}/{self.NAME}"
-        )
+        return f"postgresql+asyncpg://{self.USER}:{self.PASS}" f"@{self.HOST}:{self.PORT}/{self.NAME}"
 
     @cached_property
     def dsn_sync(self):
-        return (
-            f"postgresql+psycopg2://{self.USER}:{self.PASS}"
-            f"@{self.HOST}:{self.PORT}/{self.NAME}"
-        )
+        return f"postgresql+psycopg2://{self.USER}:{self.PASS}" f"@{self.HOST}:{self.PORT}/{self.NAME}"
 
     @cached_property
     def db_to_script(self):
-        return (
-            f"postgresql://{self.USER}:{self.PASS}"
-            f"@{self.HOST}:{self.PORT}/{self.NAME}"
-        )
+        return f"postgresql://{self.USER}:{self.PASS}" f"@{self.HOST}:{self.PORT}/{self.NAME}"
 
 
 class TestDBSettings(BaseSettings):

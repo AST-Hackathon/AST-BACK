@@ -29,9 +29,7 @@ class DatabaseAccessor:
         self._statement_cache_size = statement_cache_size
         self._async_session_maker = None
 
-    def set_settings(
-        self, db_settings: DBSettings, statement_cache_size: int = 0
-    ):
+    def set_settings(self, db_settings: DBSettings, statement_cache_size: int = 0):
         self._db_settings = db_settings
         self._dsn = (
             f"postgresql+asyncpg://{self._db_settings.USER}:{self._db_settings.PASS}"
@@ -80,9 +78,7 @@ class DatabaseAccessor:
             await conn.run_sync(Base.metadata.create_all)
 
     def _create_session(self) -> None:
-        self._async_session_maker = sessionmaker(
-            bind=self.engine, expire_on_commit=False, class_=AsyncSession
-        )
+        self._async_session_maker = sessionmaker(bind=self.engine, expire_on_commit=False, class_=AsyncSession)
 
     def get_sync_session(self):
         return scoped_session(
@@ -93,9 +89,7 @@ class DatabaseAccessor:
         )
 
     def get_async_session_maker(self) -> sessionmaker:
-        return sessionmaker(
-            bind=self.engine, expire_on_commit=False, class_=AsyncSession
-        )
+        return sessionmaker(bind=self.engine, expire_on_commit=False, class_=AsyncSession)
 
     @asynccontextmanager
     async def get_session(self) -> AsyncGenerator[AsyncSession, None]:
