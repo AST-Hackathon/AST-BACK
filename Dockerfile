@@ -4,17 +4,15 @@ RUN apt update \
     && apt upgrade -y \
     && apt install -y curl \
         locales \
+        make \
     && rm -rf /var/lib/apt/lists/* \
     && sed -i -e 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen \
     && locale-gen
 
 RUN pip3 install --no-cache-dir --upgrade pip \
     && pip install poetry
-RUN pip install python-dotenv
 RUN pip install uvicorn
-RUN pip install greenlet
 RUN apt-get update
-RUN apt-get install -y ffmpeg libsm6 libxext6
 
 ENV POETRY_VIRTUALENVS_CREATE=false
 

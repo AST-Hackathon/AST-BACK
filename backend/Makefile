@@ -1,4 +1,4 @@
-.PHONY: run-server find-processclean install migrate run-server-nh stop-server backup backup_data check ruff_fix black_fix
+.PHONY: run-server find-processclean install migrate run-server-nh stop-server backup backup_data check ruff_fix black_fix run_migr
 
 clean:
 	@echo "Removing lock..."
@@ -37,3 +37,10 @@ black_fix:
 
 check: ruff_fix black_fix
 	@echo "All checks passed!"
+
+run_migr:
+	@echo "Applying database migrations..."
+	@poetry run alembic upgrade head
+	@echo "Migrations applied successfully."
+	@echo "Starting server..."
+	@poetry run python3 run.py
